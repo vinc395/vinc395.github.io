@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soon Wei (Vincent) Wong — Bioinformatician & Computational Biologist</title>
+<meta name="description" content="Bioinformatician specializing in spatial transcriptomics, computational pathology, proteomics, and deep learning for biomedical research.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#FAFAFA;--surface:#FFFFFF;--surface-hover:#F5F5F5;
+  --fg:#111111;--muted:#6B6B6B;--border:rgba(0,0,0,0.08);
+  --accent:#6C63FF;--accent-glow:rgba(108,99,255,0.15);--accent-2:#00D4AA;--accent-3:#FF6B9D;
+  --cyan:#00B4D8;--violet:#8B5CF6;--emerald:#10B981;--rose:#F43F5E;--amber:#F59E0B;
+  --radius:16px;--radius-sm:10px;
+  --nav-bg:rgba(250,250,250,0.85);--nav-scrolled-bg:rgba(250,250,250,0.95);--nav-shadow:0 1px 3px rgba(0,0,0,.04);
+  --hero-overlay:rgba(250,250,250,0.4);--card-shadow:0 1px 3px rgba(0,0,0,.04);--card-shadow-hover:0 12px 40px rgba(108,99,255,.1);
+  --glow-opacity:0.18;--cell-border:rgba(108,99,255,.15);--cell-opacity:0.15;--cell-peak:0.3;
+  --noise-opacity:0.2;--hero-photo-shadow:0 4px 20px rgba(0,0,0,.1);
+}
+[data-theme="dark"]{
+  --bg:#0a0a0f;--surface:rgba(255,255,255,0.03);--surface-hover:rgba(255,255,255,0.06);
+  --fg:#f0f0f5;--muted:rgba(255,255,255,0.5);--border:rgba(255,255,255,0.08);
+  --accent:#8B83FF;--accent-glow:rgba(139,131,255,0.3);--accent-2:#00D4AA;--accent-3:#FF6B9D;
+  --cyan:#00D4FF;--violet:#A78BFA;--emerald:#34D399;--rose:#FB7185;--amber:#FBBF24;
+  --nav-bg:rgba(10,10,15,0.7);--nav-scrolled-bg:rgba(10,10,15,0.9);--nav-shadow:0 1px 3px rgba(0,0,0,.2);
+  --hero-overlay:rgba(10,10,15,0.3);--card-shadow:0 1px 3px rgba(0,0,0,.2);--card-shadow-hover:0 12px 40px rgba(0,0,0,.4);
+  --glow-opacity:0.06;--cell-border:rgba(108,99,255,.08);--cell-opacity:0.08;--cell-peak:0.15;
+  --noise-opacity:0.15;--hero-photo-shadow:0 4px 20px rgba(0,0,0,.4);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Inter',-apple-system,system-ui,sans-serif;background:var(--bg);color:var(--fg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--accent);color:#fff}
+
+/* Scroll Progress */
+.scroll-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--cyan),var(--accent-3));z-index:9999;transition:width .1s;width:0;box-shadow:0 0 10px var(--accent-glow)}
+
+/* Particle Canvas */
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);background:var(--nav-bg);border-bottom:1px solid transparent;transition:all .4s cubic-bezier(.4,0,.2,1)}
+nav.scrolled{border-bottom-color:var(--border);background:var(--nav-scrolled-bg);box-shadow:var(--nav-shadow)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-logo{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:var(--fg);text-decoration:none;position:relative}
+.nav-logo::after{content:'_';animation:blink 1s step-end infinite;color:var(--accent)}
+@keyframes blink{50%{opacity:0}}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{font-size:13px;color:var(--muted);text-decoration:none;font-weight:400;transition:all .3s;position:relative;padding:4px 0}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--cyan));transition:width .3s cubic-bezier(.4,0,.2,1);border-radius:1px}
+.nav-links a:hover{color:var(--fg)}
+.nav-links a:hover::after{width:100%}
+.nav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.nav-hamburger span{display:block;width:20px;height:2px;background:var(--fg);margin:5px 0;transition:.3s;border-radius:2px}
+
+/* Theme Toggle */
+.theme-toggle{background:var(--surface);border:1px solid var(--border);border-radius:100px;width:52px;height:28px;cursor:pointer;position:relative;transition:all .3s;box-shadow:var(--card-shadow);flex-shrink:0}
+.theme-toggle:hover{border-color:var(--accent);box-shadow:0 0 12px var(--accent-glow)}
+.theme-toggle::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--accent);transition:all .3s cubic-bezier(.4,0,.2,1);box-shadow:0 2px 8px rgba(108,99,255,.3)}
+[data-theme="dark"] .theme-toggle::after{transform:translateX(24px)}
+.theme-toggle .icon{position:absolute;top:50%;transform:translateY(-50%);font-size:12px;transition:opacity .3s;pointer-events:none}
+.theme-toggle .icon-sun{left:7px;opacity:1}
+.theme-toggle .icon-moon{right:7px;opacity:0}
+[data-theme="dark"] .theme-toggle .icon-sun{opacity:0}
+[data-theme="dark"] .theme-toggle .icon-moon{opacity:1}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:100px 24px 60px;position:relative;overflow:hidden}
+.hero-content{text-align:center;max-width:800px;position:relative;z-index:2}
+.hero-photo-wrap{margin:0 auto 32px;width:180px;height:180px;border-radius:50%;position:relative;opacity:0;transform:scale(0.5) rotate(-10deg)}
+.hero-photo-wrap::before{content:'';position:absolute;inset:-4px;border-radius:50%;background:conic-gradient(from 0deg,var(--accent),var(--cyan),var(--accent-3),var(--violet),var(--accent));opacity:0;transition:opacity .5s;animation:photoSpin 8s linear infinite}
+@keyframes photoSpin{to{transform:rotate(360deg)}}
+.hero-photo-wrap:hover::before{opacity:1}
+.hero-photo{width:100%;height:100%;border-radius:50%;object-fit:cover;border:4px solid var(--bg);position:relative;z-index:1;transition:transform .5s;box-shadow:var(--hero-photo-shadow)}
+.hero-photo-wrap:hover .hero-photo{transform:scale(1.05)}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border:1px solid var(--border);border-radius:100px;font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;background:var(--surface);opacity:0;transform:translateY(20px);box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.hero-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--emerald);animation:pulse 2s infinite;box-shadow:0 0 8px rgba(16,185,129,.6)}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.2)}}
+.hero h1{font-size:clamp(2.5rem,6vw,5rem);font-weight:800;letter-spacing:-0.03em;line-height:1.05;margin-bottom:20px;opacity:0;transform:translateY(30px)}
+.hero h1 .gradient{background:linear-gradient(135deg,var(--accent),var(--violet),var(--accent-3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% 200%;animation:gradientShift 4s ease infinite}
+@keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.hero-sub{font-size:18px;color:var(--muted);line-height:1.7;max-width:600px;margin:0 auto 40px;font-weight:300;opacity:0;transform:translateY(20px)}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;opacity:0;transform:translateY(20px)}
+
+/* 3D Model Section */
+.model-section{position:relative;z-index:1;padding:60px 24px}
+.model-container{max-width:900px;margin:0 auto;position:relative;border-radius:24px;overflow:hidden;border:1px solid var(--border);background:var(--surface);box-shadow:var(--card-shadow)}
+#model-canvas{width:100%;height:500px;display:block;cursor:grab}
+#model-canvas:active{cursor:grabbing}
+.model-overlay{position:absolute;bottom:0;left:0;right:0;padding:24px;background:linear-gradient(transparent,rgba(0,0,0,0.7));color:#fff;z-index:2}
+.model-overlay h3{font-size:18px;font-weight:600;margin-bottom:4px}
+.model-overlay p{font-size:13px;opacity:0.8}
+.model-label{position:absolute;top:16px;left:16px;z-index:2;font-family:'JetBrains Mono',monospace;font-size:11px;padding:6px 12px;border-radius:100px;background:var(--accent);color:#fff;letter-spacing:.05em}
+.model-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--surface);z-index:3}
+.model-loading .spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:500;text-decoration:none;transition:all .3s cubic-bezier(.4,0,.2,1);cursor:pointer;border:none;font-family:inherit;position:relative;overflow:hidden}
+.btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.1),transparent);opacity:0;transition:opacity .3s}
+.btn:hover::before{opacity:1}
+.btn-primary{background:linear-gradient(135deg,var(--accent),#5046e5);color:#fff;border:1px solid rgba(108,99,255,.5);box-shadow:0 4px 20px var(--accent-glow)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(108,99,255,.4)}
+.btn-secondary{background:var(--surface);color:var(--fg);border:1px solid var(--border);box-shadow:var(--card-shadow)}
+.btn-secondary:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:var(--card-shadow-hover)}
+.btn-icon{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* Sections */
+section{padding:100px 24px;position:relative;z-index:1}
+.section-inner{max-width:1200px;margin:0 auto}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:12px;text-transform:uppercase;letter-spacing:.15em;color:var(--accent);margin-bottom:12px;display:flex;align-items:center;gap:12px}
+.section-label::before{content:'';width:24px;height:2px;background:linear-gradient(90deg,var(--accent),transparent);border-radius:1px}
+.section-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:16px;line-height:1.15}
+.section-desc{color:var(--muted);max-width:600px;font-size:16px;line-height:1.7;margin-bottom:48px}
+
+/* Stats */
+.stats-row{display:flex;gap:56px;margin-bottom:56px;flex-wrap:wrap}
+.stat{text-align:left;position:relative}
+.stat::after{content:'';position:absolute;right:-28px;top:50%;transform:translateY(-50%);width:1px;height:40px;background:var(--border)}
+.stat:last-child::after{display:none}
+.stat-value{font-size:40px;font-weight:800;letter-spacing:-0.03em;line-height:1;color:var(--fg)}
+.stat-label{font-size:12px;color:var(--muted);margin-top:6px;font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.05em}
+
+/* Tags */
+.tags-wrap{display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:100px;font-size:12px;font-family:'JetBrains Mono',monospace;background:var(--surface);border:1px solid var(--border);color:var(--muted);transition:all .3s;box-shadow:var(--card-shadow)}
+.tag:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 15px rgba(108,99,255,.1)}
+.tag .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.6}
+
+/* Research Grid */
+.research-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.research-item{padding:28px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);transition:all .4s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;box-shadow:var(--card-shadow)}
+.research-item::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--cyan));transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.research-item:hover::before{transform:scaleX(1)}
+.research-item:hover{border-color:rgba(108,99,255,.3);transform:translateY(-4px);box-shadow:var(--card-shadow-hover)}
+.research-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);margin-bottom:14px;opacity:.7}
+.research-item h3{font-size:16px;font-weight:600;margin-bottom:8px;transition:color .3s}
+.research-item:hover h3{color:var(--accent)}
+.research-item p{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* Skills */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:20px}
+.skill-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px;transition:all .4s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;box-shadow:var(--card-shadow)}
+.skill-card:hover{border-color:rgba(108,99,255,.3);transform:translateY(-4px);box-shadow:var(--card-shadow-hover)}
+.skill-icon{width:48px;height:48px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:24px;background:linear-gradient(135deg,rgba(108,99,255,.1),rgba(0,212,170,.08));border:1px solid rgba(108,99,255,.15);transition:all .3s}
+.skill-card:hover .skill-icon{transform:scale(1.1) rotate(-5deg);box-shadow:0 4px 20px rgba(108,99,255,.3)}
+.skill-card h3{font-size:16px;font-weight:600;margin-bottom:8px}
+.skill-card p{font-size:13px;color:var(--muted);line-height:1.6}
+.skill-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.skill-tag{font-size:11px;padding:4px 10px;border-radius:100px;background:rgba(108,99,255,.06);border:1px solid rgba(108,99,255,.12);color:var(--accent);font-family:'JetBrains Mono',monospace;transition:all .3s}
+.skill-tag:hover{background:rgba(108,99,255,.12);transform:translateY(-1px)}
+
+/* Projects */
+.projects-list{display:flex;flex-direction:column;gap:16px}
+.project-card{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;padding:24px 28px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);text-decoration:none;color:inherit;transition:all .4s cubic-bezier(.4,0,.2,1);box-shadow:var(--card-shadow);position:relative;overflow:hidden}
+.project-card:hover{border-color:rgba(108,99,255,.3);transform:translateY(-3px);box-shadow:var(--card-shadow-hover)}
+.project-card h3{font-size:16px;font-weight:600;margin-bottom:6px;transition:color .3s}
+.project-card:hover h3{color:var(--accent)}
+.project-card p{font-size:13px;color:var(--muted);line-height:1.6;max-width:600px}
+.project-meta{display:flex;align-items:center;gap:16px;font-size:12px;color:var(--muted);margin-top:10px;font-family:'JetBrains Mono',monospace}
+.project-lang{display:flex;align-items:center;gap:6px}
+.project-lang .dot{width:8px;height:8px;border-radius:50%}
+.project-arrow{color:var(--muted);transition:all .3s}
+.project-card:hover .project-arrow{color:var(--accent);transform:translate(4px,-4px)}
+
+/* Publications */
+.pub-list{display:flex;flex-direction:column;gap:0}
+.pub-item{padding:20px 0;border-bottom:1px solid var(--border);transition:all .3s;position:relative}
+.pub-item:first-child{border-top:1px solid var(--border)}
+.pub-item::before{content:'';position:absolute;left:-16px;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--accent),var(--cyan));border-radius:2px;opacity:0;transition:opacity .3s}
+.pub-item:hover::before{opacity:1}
+.pub-item:hover{padding-left:20px;border-color:rgba(108,99,255,.15)}
+.pub-item h3{font-size:14px;font-weight:500;line-height:1.5;margin-bottom:6px;transition:color .3s}
+.pub-item:hover h3{color:var(--accent)}
+.pub-authors{font-size:12px;color:var(--muted);margin-bottom:4px}
+.pub-journal{font-size:12px;color:var(--muted);font-style:italic}
+.pub-doi{font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--accent);text-decoration:none;margin-top:6px;display:inline-block;transition:all .3s}
+.pub-doi:hover{transform:translateX(4px);text-shadow:0 0 10px var(--accent-glow)}
+
+/* Contact */
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.contact-card{display:flex;align-items:center;gap:14px;padding:20px 24px;border:1px solid var(--border);border-radius:var(--radius);text-decoration:none;color:inherit;background:var(--surface);transition:all .4s cubic-bezier(.4,0,.2,1);box-shadow:var(--card-shadow)}
+.contact-card:hover{border-color:rgba(108,99,255,.3);transform:translateY(-3px);box-shadow:var(--card-shadow-hover)}
+.contact-icon{width:40px;height:40px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(108,99,255,.1),rgba(0,212,170,.08));flex-shrink:0;transition:all .3s}
+.contact-card:hover .contact-icon{transform:scale(1.1);box-shadow:0 4px 15px rgba(108,99,255,.2)}
+.contact-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-family:'JetBrains Mono',monospace}
+.contact-value{font-size:14px;font-weight:500;color:var(--fg)}
+
+/* Footer */
+footer{padding:40px 24px;border-top:1px solid var(--border);position:relative;z-index:1}
+.footer-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-text{font-size:12px;color:var(--muted)}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:12px;color:var(--muted);text-decoration:none;transition:all .3s}
+.footer-links a:hover{color:var(--accent);transform:translateY(-1px)}
+
+/* Divider */
+.divider{height:1px;max-width:1200px;margin:0 auto;position:relative;overflow:hidden;z-index:1}
+.divider::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,var(--accent),var(--cyan),var(--accent-3),transparent);animation:dividerSlide 5s linear infinite}
+@keyframes dividerSlide{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+/* Glow Orb */
+.glow-orb{position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(120px);opacity:var(--glow-opacity);pointer-events:none;z-index:0;animation:orbMove 20s ease-in-out infinite}
+.glow-1{background:var(--accent);top:-200px;left:-200px;animation-delay:0s}
+.glow-2{background:var(--cyan);bottom:-200px;right:-200px;animation-delay:-7s}
+@keyframes orbMove{0%,100%{transform:translate(0,0)}33%{transform:translate(40px,-50px)}66%{transform:translate(-30px,40px)}}
+
+/* Noise */
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  background-size:200px;opacity:var(--noise-opacity)}
+
+/* Cell grid */
+.cell-grid{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.cell{position:absolute;border:1.5px solid var(--cell-border);border-radius:50%;animation:cellPulse 4s ease-in-out infinite}
+@keyframes cellPulse{0%,100%{transform:scale(1);opacity:var(--cell-opacity)}50%{transform:scale(1.1);opacity:var(--cell-peak)}}
+
+/* Mobile */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-hamburger{display:block}
+  .nav-links.open{display:flex;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:var(--nav-scrolled-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px;gap:16px}
+  .hero{min-height:auto;padding:100px 24px 48px}
+  .hero h1{font-size:2.5rem}
+  .hero-photo-wrap{width:140px;height:140px}
+  .hero-sub{font-size:15px}
+  section{padding:60px 24px}
+  .project-card{grid-template-columns:1fr;gap:12px}
+  .project-arrow{display:none}
+  .stats-row{gap:24px}
+  .stat::after{display:none}
+  .contact-grid{grid-template-columns:1fr}
+  .research-grid,.skills-grid{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr;gap:32px}
+  #model-canvas{height:300px}
+}
+</style>
+</head>
+<body>
+
+<div class="glow-orb glow-1"></div>
+<div class="glow-orb glow-2"></div>
+<canvas id="particles"></canvas>
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">vinc@wong:~$</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#model">3D Model</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#skills">Expertise</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="icon icon-sun">&#9728;</span>
+        <span class="icon icon-moon">&#9790;</span>
+      </button>
+      <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="cell-grid">
+  <div class="cell" style="width:200px;height:200px;top:10%;left:5%;animation-delay:0s"></div>
+  <div class="cell" style="width:150px;height:150px;top:30%;right:10%;animation-delay:-1s"></div>
+  <div class="cell" style="width:180px;height:180px;bottom:20%;left:20%;animation-delay:-2s"></div>
+  <div class="cell" style="width:120px;height:120px;top:60%;left:60%;animation-delay:-3s"></div>
+</div>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <div class="hero-photo-wrap" id="heroPhoto">
+      <img class="hero-photo" src="https://vincent-portfolio-4s7.pages.dev/profile.png" alt="Vincent Wong">
+    </div>
+    <div class="hero-badge" id="heroBadge"><span class="dot"></span> Available for collaboration</div>
+    <h1 id="heroH1">Soon Wei (Vincent)<br><span class="gradient">Wong</span></h1>
+    <p class="hero-sub" id="heroSub">Bioinformatician & Computational Biologist specializing in spatial transcriptomics, computational pathology, and deep learning for biomedical research.</p>
+    <div class="hero-actions" id="heroActions">
+      <a href="#research" class="btn btn-primary">
+        <span>View Research</span>
+        <svg class="btn-icon" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="https://github.com/vinc395" target="_blank" rel="noopener" class="btn btn-secondary">
+        <svg class="btn-icon" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        <span>GitHub</span>
+      </a>
+      <a href="https://orcid.org/0000-0002-7994-1836" target="_blank" rel="noopener" class="btn btn-secondary">
+        <svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M8 7v10M8 7c1.5 0 3 1 3 2.5S9.5 12 8 12M16 7h-2v3c0 1-0.5 2-1.5 2M16 7c2 0 2 1.5 2 2.5S18 12 16 12h-2"/></svg>
+        <span>ORCID</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 3D Model Section -->
+<section class="model-section" id="model">
+  <div class="section-inner">
+    <div class="section-label">// Interactive 3D</div>
+    <h2 class="section-title">Neutrophil Extracellular Traps</h2>
+    <p class="section-desc">Interactive 3D model of a neutrophil expelling NETs — drag to rotate, scroll to zoom.</p>
+    <div class="model-container">
+      <div class="model-label">3D Model</div>
+      <div class="model-loading" id="modelLoading"><div class="spinner"></div></div>
+      <canvas id="model-canvas"></canvas>
+      <div class="model-overlay">
+        <h3>Neutrophil Expelling NETs</h3>
+        <p>Purple cell 3D model — NETosis in action</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- About -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div>
+        <div class="section-label">// About</div>
+        <h2 class="section-title">Where spatial biology<br>meets computation</h2>
+        <p class="section-desc">I develop analytical frameworks that integrate spatial transcriptomics with histopathological imaging — enabling morphology-aware cell type discovery and tissue architecture mapping at subcellular resolution.</p>
+        <p class="section-desc">My work combines wet lab immunology expertise with advanced computational methods to bridge the gap between bench science and data-driven discovery.</p>
+        <div class="stats-row">
+          <div class="stat"><div class="stat-value" data-count="9">0</div><div class="stat-label">Public Repos</div></div>
+          <div class="stat"><div class="stat-value" data-count="17">0</div><div class="stat-label">Publications</div></div>
+          <div class="stat"><div class="stat-value" data-count="6">0</div><div class="stat-label">Years Research</div></div>
+          <div class="stat"><div class="stat-value">5+</div><div class="stat-label">Modalities</div></div>
+        </div>
+        <div class="tags-wrap">
+          <span class="tag"><span class="dot"></span>10x Xenium</span>
+          <span class="tag"><span class="dot"></span>Phenocycler</span>
+          <span class="tag"><span class="dot"></span>H&amp;E Analysis</span>
+          <span class="tag"><span class="dot"></span>Cellpose</span>
+          <span class="tag"><span class="dot"></span>Foundation Models</span>
+        </div>
+      </div>
+      <div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Research -->
+<section id="research">
+  <div class="section-inner">
+    <div class="section-label">// Research Focus</div>
+    <h2 class="section-title">Multi-modal integration of<br>spatial & single-cell omics</h2>
+    <p class="section-desc">My work sits at the intersection of wet lab immunology and computational biology — developing pipelines and tools that bridge high-dimensional spatial data with deep learning to uncover disease mechanisms.</p>
+    <div class="research-grid">
+      <div class="research-item">
+        <div class="research-num">01</div>
+        <h3>Spatial Transcriptomics</h3>
+        <p>10x Xenium in situ analysis, morphology-aware cell rescue, multi-sample integration with HEnium workflows and weighted nearest-neighbor graph methods.</p>
+      </div>
+      <div class="research-item">
+        <div class="research-num">02</div>
+        <h3>Computational Pathology</h3>
+        <p>H&E image analysis, nuclei segmentation with Cellpose/Hoptimus, morphological embedding for cell type annotation and tissue architecture mapping.</p>
+      </div>
+      <div class="research-item">
+        <div class="research-num">03</div>
+        <h3>Proteomics & Multi-omics</h3>
+        <p>Mass spectrometry data analysis, cross-platform data integration, multi-omics factor analysis for systems-level disease characterization.</p>
+      </div>
+      <div class="research-item">
+        <div class="research-num">04</div>
+        <h3>Deep Learning for Biomedicine</h3>
+        <p>Convolutional neural networks for image classification, transfer learning for histopathology, foundation models for morphological embeddings.</p>
+      </div>
+      <div class="research-item">
+        <div class="research-num">05</div>
+        <h3>Immuno-informatics</h3>
+        <p>Neutrophil biology, NETosis modelling, rheumatoid arthritis synovium analysis, immune cell phenotype discovery from single-cell data.</p>
+      </div>
+      <div class="research-item">
+        <div class="research-num">06</div>
+        <h3>Population Genomics</h3>
+        <p>GWAS Catalog pipelines, human-to-mouse cross-species variant mapping, genomic coordinate liftOver and translational research support.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Skills -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-label">// Technical Expertise</div>
+    <h2 class="section-title">Full-stack computational biology</h2>
+    <p class="section-desc">From bench to bioinformatics — wet lab techniques and computational methods working together.</p>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon">&#x1F9EC;</div>
+        <h3>Spatial & Single-Cell Omics</h3>
+        <p>Analysis of 10x Xenium, Visium, MERFISH spatial transcriptomics and single-cell RNA-seq with multi-modal integration.</p>
+        <div class="skill-tags"><span class="skill-tag">Scanpy</span><span class="skill-tag">Seurat</span><span class="skill-tag">Squidpy</span><span class="skill-tag">CellRanger</span><span class="skill-tag">WNN</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">&#x1F52C;</div>
+        <h3>Computational Pathology & AI</h3>
+        <p>H&E image analysis, morphological embeddings with foundation models, nuclei/cell segmentation, and tissue classification.</p>
+        <div class="skill-tags"><span class="skill-tag">Hoptimus</span><span class="skill-tag">Cellpose</span><span class="skill-tag">PyTorch</span><span class="skill-tag">TensorFlow</span><span class="skill-tag">MONAI</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">&#x1F4CA;</div>
+        <h3>RNA-seq & Differential Expression</h3>
+        <p>End-to-end RNA-seq pipelines from QC through quantification to differential expression, pathway enrichment, and visualization.</p>
+        <div class="skill-tags"><span class="skill-tag">DESeq2</span><span class="skill-tag">edgeR</span><span class="skill-tag">Salmon</span><span class="skill-tag">STAR</span><span class="skill-tag">featureCounts</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">&#x1F9EA;</div>
+        <h3>Wet Lab & Immunology</h3>
+        <p>Cell culture, flow cytometry, immunohistochemistry, molecular cloning, and immunological assays for rheumatoid arthritis research.</p>
+        <div class="skill-tags"><span class="skill-tag">FACS</span><span class="skill-tag">IHC</span><span class="skill-tag">ELISA</span><span class="skill-tag">qPCR</span><span class="skill-tag">Western Blot</span><span class="skill-tag">CRISPR</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">&#x1F9E0;</div>
+        <h3>Machine Learning & Deep Learning</h3>
+        <p>Neural network architectures for biomedical image analysis, transfer learning, and predictive modeling from multi-modal data.</p>
+        <div class="skill-tags"><span class="skill-tag">scikit-learn</span><span class="skill-tag">PyTorch</span><span class="skill-tag">Keras</span><span class="skill-tag">XGBoost</span><span class="skill-tag">CLAM</span></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">&#x26A1;</div>
+        <h3>Pipelines & Infrastructure</h3>
+        <p>Reproducible analysis pipelines, containerized workflows, cloud computing, and version-controlled computational research.</p>
+        <div class="skill-tags"><span class="skill-tag">Nextflow</span><span class="skill-tag">Snakemake</span><span class="skill-tag">Docker</span><span class="skill-tag">AWS</span><span class="skill-tag">Galaxy</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Projects -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-label">// Open Source</div>
+    <h2 class="section-title">Selected Projects</h2>
+    <p class="section-desc">Tools, games, and pipelines built at the intersection of science and code.</p>
+    <div class="projects-list">
+      <a href="https://github.com/vinc395/HEnium_neutrophil_rescue" target="_blank" rel="noopener" class="project-card">
+        <div>
+          <h3>HEnium neutrophil rescue</h3>
+          <p>Morphology-assisted neutrophil rescue tutorial for 10x Xenium and H&E using HEnium workflows — bridging spatial transcriptomics with image-based morphology.</p>
+          <div class="project-meta">
+            <span class="project-lang"><span class="dot" style="background:#F37626"></span>Jupyter Notebook</span>
+            <span>&#11088; 1</span>
+            <span>May 2026</span>
+          </div>
+        </div>
+        <svg class="project-arrow btn-icon" width="20" height="20" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="https://vinc395.github.io/ra-synovium-net-shooter/" target="_blank" rel="noopener" class="project-card">
+        <div>
+          <h3>RA Synovium NET Shooter</h3>
+          <p>Low-poly 3D arcade game built with three.js — control an activated neutrophil inside an inflamed rheumatoid arthritis synovium.</p>
+          <div class="project-meta">
+            <span class="project-lang"><span class="dot" style="background:#f1e05a"></span>JavaScript / three.js</span>
+            <span>&#127918; Playable Demo</span>
+            <span>Apr 2026</span>
+          </div>
+        </div>
+        <svg class="project-arrow btn-icon" width="20" height="20" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="https://github.com/vinc395/gwas-human2mouse" target="_blank" rel="noopener" class="project-card">
+        <div>
+          <h3>GWAS human2mouse</h3>
+          <p>GWAS Catalog human-to-mouse mm39 liftOver pipeline with compact reports and tests — enabling translational genomic research across species.</p>
+          <div class="project-meta">
+            <span class="project-lang"><span class="dot" style="background:#3572A5"></span>Python</span>
+            <span>Apr 2026</span>
+          </div>
+        </div>
+        <svg class="project-arrow btn-icon" width="20" height="20" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="https://github.com/vinc395/JDRF_RNAseq_html" target="_blank" rel="noopener" class="project-card">
+        <div>
+          <h3>JDRF RNA-seq Report</h3>
+          <p>Interactive HTML report for RNA-seq analysis — part of the JDRF (Juvenile Diabetes Research Foundation) transcriptomics project.</p>
+          <div class="project-meta">
+            <span class="project-lang"><span class="dot" style="background:#e34c26"></span>HTML</span>
+            <span>Feb 2022</span>
+          </div>
+        </div>
+        <svg class="project-arrow btn-icon" width="20" height="20" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="https://github.com/vinc395/custom-track" target="_blank" rel="noopener" class="project-card">
+        <div>
+          <h3>ATAC-seq Custom Tracks</h3>
+          <p>Custom genome browser tracks for ATAC-seq chromatin accessibility data — visualizing open chromatin landscapes at scale.</p>
+          <div class="project-meta">
+            <span class="project-lang"><span class="dot" style="background:#ccc"></span>Data</span>
+            <span>Oct 2018</span>
+          </div>
+        </div>
+        <svg class="project-arrow btn-icon" width="20" height="20" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Publications -->
+<section id="publications">
+  <div class="section-inner">
+    <div class="section-label">// Publications</div>
+    <h2 class="section-title">Selected Publications</h2>
+    <p class="section-desc">Peer-reviewed research in immunology, bioinformatics, and computational biology.</p>
+    <div class="pub-list">
+      <div class="pub-item">
+        <h3>The E3-ome gene-centric compendium reveals the human E3 ligase landscape</h3>
+        <div class="pub-authors">Chua N.K., Gonzalez-Robles T.J., Reddington C.J., ... <strong>Wong S.W.</strong>, ... Wertz I. et al.</div>
+        <div class="pub-journal">Cell, 189(7), 2167-2188, Apr 2026</div>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/41864206/" target="_blank" rel="noopener" class="pub-doi">PubMed &rarr;</a>
+      </div>
+      <div class="pub-item">
+        <h3>Spatial patterning of fibroblast TGF&beta; signaling underlies treatment resistance in rheumatoid arthritis</h3>
+        <div class="pub-authors">Bhamidipati K., McIntyre A.B.R., Kazerounian S., ... <strong>Wong S.W.</strong>, ... AMP-AIM Network et al.</div>
+        <div class="pub-journal">Nature Immunology, 27(3), 556-571, Mar 2026</div>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/41540265/" target="_blank" rel="noopener" class="pub-doi">PubMed &rarr;</a>
+      </div>
+      <div class="pub-item">
+        <h3>ZEB2 orchestrates a transcriptional program to safeguard the integrity of human CD4+ Th1 effector memory cells</h3>
+        <div class="pub-authors"><strong>Wong S.W.</strong>, Hope C.M., Shepherdson K.L., Bandara V., ... Brown C.Y. et al.</div>
+        <div class="pub-journal">Journal of Immunology, 215(4), vkag043, Apr 2026</div>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/42026766/" target="_blank" rel="noopener" class="pub-doi">PubMed &rarr;</a>
+      </div>
+      <div class="pub-item">
+        <h3>Nanoplastic toxicity and uptake in kidney cells: differential effects of concentration, particle size, and polymer type</h3>
+        <div class="pub-authors">Gillings H.L., Rojas-Canales D.M., <strong>Wong S.W.</strong>, Bhuskute K.R., ... Gleadle J.M., MacGregor M. et al.</div>
+        <div class="pub-journal">Cell Biology and Toxicology, 42(1), 21, Jan 2026</div>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/41543756/" target="_blank" rel="noopener" class="pub-doi">PubMed &rarr;</a>
+      </div>
+      <div class="pub-item">
+        <h3>Novel Molecular Signatures of Peripheral Regulatory T Cells in Kidney Disease Associated With Type 1 Diabetes</h3>
+        <div class="pub-authors">Bansal A., <strong>Wong S.W.</strong>, Wong W.K.M., ... Ekinci E.I. et al.</div>
+        <div class="pub-journal">Kidney360, 7(3), 501-514, Mar 2026</div>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/40811035/" target="_blank" rel="noopener" class="pub-doi">PubMed &rarr;</a>
+      </div>
+      <div class="pub-item">
+        <h3>The transcriptome of early compensatory kidney growth reveals cell and time specific responses</h3>
+        <div class="pub-authors">Rojas-Canales D.M., <strong>Wong S.W.</strong>, Tucker E.J., ... Gleadle J.M. et al.</div>
+        <div class="pub-journal">iScience, 27(9), 110608, Sept 2024</div>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/39220259/" target="_blank" rel="noopener" class="pub-doi">PubMed &rarr;</a>
+      </div>
+      <div class="pub-item">
+        <h3>SARS-CoV-2 produces a microRNA CoV2-miR-O8 in patients with COVID-19 infection</h3>
+        <div class="pub-authors">Tucker E.J., <strong>Wong S.W.</strong>, Marri S., ... Gleadle J.M. et al.</div>
+        <div class="pub-journal">iScience, 27(1), 108719, Jan 2024</div>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/38226175/" target="_blank" rel="noopener" class="pub-doi">PubMed &rarr;</a>
+      </div>
+      <div class="pub-item">
+        <h3>Parallel recovery of chromatin accessibility and gene expression dynamics from frozen human regulatory T cells</h3>
+        <div class="pub-authors">Wong Y.Y., Harbison J.E., Hope C.M., ... <strong>Wong S.W.</strong>, ... Barry S.C. et al.</div>
+        <div class="pub-journal">Scientific Reports, 13(1), 5506, Apr 2023</div>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/37016052/" target="_blank" rel="noopener" class="pub-doi">PubMed &rarr;</a>
+      </div>
+      <div class="pub-item">
+        <h3>FOXP3 and miR-155 cooperate to control the invasive potential of human breast cancer cells by down regulating ZEB2 independently of ZEB1</h3>
+        <div class="pub-authors">Brown C.Y., Dayan S., <strong>Wong S.W.</strong>, ... Sadlon T.J., Barry S.C. et al.</div>
+        <div class="pub-journal">Oncotarget, 9(45), 27708-27727, Jun 2018</div>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/29963231/" target="_blank" rel="noopener" class="pub-doi">PubMed &rarr;</a>
+      </div>
+    </div>
+    <div style="margin-top:24px">
+      <a href="https://researchnow.flinders.edu.au/en/persons/vincent-wong/publications/" target="_blank" rel="noopener" class="btn btn-secondary">
+        <svg class="btn-icon" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>View All on Flinders Research</span>
+      </a>
+      <a href="https://orcid.org/0000-0002-7994-1836" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-left:12px">
+        <svg class="btn-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M8 7v10M8 7c1.5 0 3 1 3 2.5S9.5 12 8 12M16 7h-2v3c0 1-0.5 2-1.5 2M16 7c2 0 2 1.5 2 2.5S18 12 16 12h-2"/></svg>
+        <span>ORCID Profile</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="section-label">// Get in Touch</div>
+    <h2 class="section-title">Let's collaborate</h2>
+    <p class="section-desc">Open to research collaborations, consulting, and speaking opportunities in spatial omics, computational pathology, and AI for biomedicine.</p>
+    <div class="contact-grid">
+      <a href="https://github.com/vinc395" target="_blank" rel="noopener" class="contact-card">
+        <div class="contact-icon">
+          <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z" fill="var(--fg)"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">GitHub</div>
+          <div class="contact-value">vinc395</div>
+        </div>
+      </a>
+      <a href="https://orcid.org/0000-0002-7994-1836" target="_blank" rel="noopener" class="contact-card">
+        <div class="contact-icon">
+          <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="var(--fg)" stroke-width="1.5" fill="none"/><path d="M8 7v10M8 7c1.5 0 3 1 3 2.5S9.5 12 8 12M16 7h-2v3c0 1-0.5 2-1.5 2M16 7c2 0 2 1.5 2 2.5S18 12 16 12h-2" stroke="var(--fg)" stroke-width="1.5" fill="none"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">ORCID</div>
+          <div class="contact-value">0000-0002-7994-1836</div>
+        </div>
+      </a>
+      <a href="https://researchnow.flinders.edu.au/en/persons/vincent-wong/" target="_blank" rel="noopener" class="contact-card">
+        <div class="contact-icon">
+          <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3" stroke="var(--fg)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Flinders Profile</div>
+          <div class="contact-value">View Publications</div>
+        </div>
+      </a>
+      <a href="https://scholar.google.com/citations?user=vSWong" target="_blank" rel="noopener" class="contact-card">
+        <div class="contact-icon">
+          <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="var(--fg)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <div class="contact-label">Google Scholar</div>
+          <div class="contact-value">Citations</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-text">&copy; 2026 Vincent Wong. Built with passion for science and code.</div>
+    <div class="footer-links">
+      <a href="https://github.com/vinc395" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://orcid.org/0000-0002-7994-1836" target="_blank" rel="noopener">ORCID</a>
+      <a href="#hero">Back to Top</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { animate, stagger, createScrollObserver, utils } from 'https://cdn.jsdelivr.net/npm/animejs@4.0.2/+esm';
+
+const canvas = document.getElementById('model-canvas');
+const loading = document.getElementById('modelLoading');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.2;
+
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.enablePan = false;
+controls.minDistance = 2;
+controls.maxDistance = 10;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 2;
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+dirLight.position.set(5, 5, 5);
+scene.add(dirLight);
+const dirLight2 = new THREE.DirectionalLight(0x8B83FF, 0.5);
+dirLight2.position.set(-5, 3, -5);
+scene.add(dirLight2);
+
+camera.position.set(0, 1, 4);
+
+let model;
+const loader = new GLTFLoader();
+loader.load(
+  'purple%20cell%203d%20model.glb',
+  (gltf) => {
+    model = gltf.scene;
+    const box = new THREE.Box3().setFromObject(model);
+    const center = box.getCenter(new THREE.Vector3());
+    model.position.sub(center);
+    const size = box.getSize(new THREE.Vector3());
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const scale = 3 / maxDim;
+    model.scale.setScalar(scale);
+    scene.add(model);
+    loading.style.display = 'none';
+  },
+  undefined,
+  (err) => {
+    console.warn('GLB load failed:', err);
+    loading.innerHTML = '<p style="color:var(--muted);font-size:14px;text-align:center;padding:40px">3D model file not found. Place <code>purple cell 3d model.glb</code> in the project directory.</p>';
+  }
+);
+
+function animateModel() {
+  requestAnimationFrame(animateModel);
+  controls.update();
+  if (model) model.rotation.y += 0.003;
+  renderer.render(scene, camera);
+}
+animateModel();
+
+window.addEventListener('resize', () => {
+  const w = canvas.clientWidth;
+  const h = canvas.clientHeight;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+});
+
+// ===== THEME TOGGLE =====
+const themeToggle = document.getElementById('themeToggle');
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) document.documentElement.dataset.theme = savedTheme;
+else if (prefersDark) document.documentElement.dataset.theme = 'dark';
+
+themeToggle.addEventListener('click', () => {
+  const isDark = document.documentElement.dataset.theme === 'dark';
+  document.documentElement.dataset.theme = isDark ? 'light' : 'dark';
+  localStorage.setItem('theme', isDark ? 'light' : 'dark');
+});
+
+// ===== HAMBURGER =====
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+  const spans = hamburger.querySelectorAll('span');
+  if (navLinks.classList.contains('open')) {
+    animate(spans[0], { rotate: 45, y: 7, duration: 300 });
+    animate(spans[1], { opacity: 0, duration: 200 });
+    animate(spans[2], { rotate: -45, y: -7, duration: 300 });
+  } else {
+    animate(spans[0], { rotate: 0, y: 0, duration: 300 });
+    animate(spans[1], { opacity: 1, duration: 200 });
+    animate(spans[2], { rotate: 0, y: 0, duration: 300 });
+  }
+});
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  navLinks.classList.remove('open');
+  const spans = hamburger.querySelectorAll('span');
+  animate(spans[0], { rotate: 0, y: 0, duration: 300 });
+  animate(spans[1], { opacity: 1, duration: 200 });
+  animate(spans[2], { rotate: 0, y: 0, duration: 300 });
+}));
+
+// ===== NAV SCROLL =====
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ===== SCROLL PROGRESS =====
+const scrollProgress = document.getElementById('scrollProgress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  scrollProgress.style.width = (window.scrollY / h * 100) + '%';
+});
+
+// ===== PARTICLES =====
+const pCanvas = document.getElementById('particles');
+const pCtx = pCanvas.getContext('2d');
+let particles = [];
+function resizeParticles() {
+  pCanvas.width = window.innerWidth;
+  pCanvas.height = window.innerHeight;
+}
+resizeParticles();
+window.addEventListener('resize', resizeParticles);
+
+class Particle {
+  constructor() {
+    this.x = Math.random() * pCanvas.width;
+    this.y = Math.random() * pCanvas.height;
+    this.vx = (Math.random() - 0.5) * 0.5;
+    this.vy = (Math.random() - 0.5) * 0.5;
+    this.r = Math.random() * 2 + 0.5;
+    this.alpha = Math.random() * 0.5 + 0.1;
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    if (this.x < 0 || this.x > pCanvas.width) this.vx *= -1;
+    if (this.y < 0 || this.y > pCanvas.height) this.vy *= -1;
+  }
+  draw() {
+    pCtx.beginPath();
+    pCtx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    pCtx.fillStyle = `rgba(108,99,255,${this.alpha})`;
+    pCtx.fill();
+  }
+}
+
+for (let i = 0; i < 60; i++) particles.push(new Particle());
+
+function drawParticles() {
+  pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        pCtx.beginPath();
+        pCtx.moveTo(particles[i].x, particles[i].y);
+        pCtx.lineTo(particles[j].x, particles[j].y);
+        pCtx.strokeStyle = `rgba(108,99,255,${0.08 * (1 - dist / 120)})`;
+        pCtx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+// ===== HERO ENTRANCE =====
+animate('#heroPhoto', { opacity: [0, 1], scale: [0.5, 1], rotate: [-10, 0], duration: 1200, ease: 'outExpo', delay: 200 });
+animate('#heroBadge', { opacity: [0, 1], translateY: [20, 0], duration: 800, ease: 'outQuad', delay: 500 });
+animate('#heroH1', { opacity: [0, 1], translateY: [30, 0], duration: 1000, ease: 'outQuad', delay: 700 });
+animate('#heroSub', { opacity: [0, 1], translateY: [20, 0], duration: 800, ease: 'outQuad', delay: 900 });
+animate('#heroActions', { opacity: [0, 1], translateY: [20, 0], duration: 800, ease: 'outQuad', delay: 1100 });
+
+// ===== SCROLL ANIMATIONS =====
+document.querySelectorAll('.section-label').forEach(el => {
+  createScrollObserver({
+    targets: el,
+    onEnter: () => animate(el, { opacity: [0, 1], translateX: [-30, 0], duration: 600, ease: 'outQuad' }),
+    repeat: false
+  });
+});
+
+document.querySelectorAll('.section-title').forEach(el => {
+  createScrollObserver({
+    targets: el,
+    onEnter: () => animate(el, { opacity: [0, 1], translateY: [40, 0], duration: 800, ease: 'outQuad' }),
+    repeat: false
+  });
+});
+
+document.querySelectorAll('.section-desc').forEach(el => {
+  createScrollObserver({
+    targets: el,
+    onEnter: () => animate(el, { opacity: [0, 1], translateY: [30, 0], duration: 700, ease: 'outQuad', delay: 200 }),
+    repeat: false
+  });
+});
+
+// Research items
+const researchItems = document.querySelectorAll('.research-item');
+if (researchItems.length) {
+  createScrollObserver({
+    targets: '#research .research-grid',
+    onEnter: () => animate(researchItems, { opacity: [0, 1], translateY: [40, 0], scale: [0.95, 1], duration: 600, delay: stagger(100), ease: 'outQuad' }),
+    repeat: false
+  });
+}
+
+// Skill cards
+const skillCards = document.querySelectorAll('.skill-card');
+if (skillCards.length) {
+  createScrollObserver({
+    targets: '#skills .skills-grid',
+    onEnter: () => animate(skillCards, { opacity: [0, 1], translateY: [50, 0], scale: [0.9, 1], duration: 700, delay: stagger(120), ease: 'outExpo' }),
+    repeat: false
+  });
+}
+
+// Skill tags
+const skillTags = document.querySelectorAll('.skill-tag');
+if (skillTags.length) {
+  createScrollObserver({
+    targets: '#skills .skills-grid',
+    onEnter: () => animate(skillTags, { opacity: [0, 1], translateY: [10, 0], duration: 300, delay: stagger(40, { start: 500 }), ease: 'outQuad' }),
+    repeat: false
+  });
+}
+
+// Project cards
+const projectCards = document.querySelectorAll('.project-card');
+if (projectCards.length) {
+  createScrollObserver({
+    targets: '#projects .projects-list',
+    onEnter: () => animate(projectCards, { opacity: [0, 1], translateX: [-30, 0], duration: 600, delay: stagger(100), ease: 'outQuad' }),
+    repeat: false
+  });
+}
+
+// Publication items
+const pubItems = document.querySelectorAll('.pub-item');
+if (pubItems.length) {
+  createScrollObserver({
+    targets: '#publications .pub-list',
+    onEnter: () => animate(pubItems, { opacity: [0, 1], translateY: [20, 0], duration: 500, delay: stagger(80), ease: 'outQuad' }),
+    repeat: false
+  });
+}
+
+// Contact cards
+const contactCards = document.querySelectorAll('.contact-card');
+if (contactCards.length) {
+  createScrollObserver({
+    targets: '#contact .contact-grid',
+    onEnter: () => animate(contactCards, { opacity: [0, 1], translateY: [30, 0], scale: [0.95, 1], duration: 600, delay: stagger(100), ease: 'outExpo' }),
+    repeat: false
+  });
+}
+
+// Stat counters
+document.querySelectorAll('.stat-value[data-count]').forEach(el => {
+  const target = parseInt(el.dataset.count);
+  createScrollObserver({
+    targets: el,
+    onEnter: () => {
+      const obj = { val: 0 };
+      animate(obj, { val: target, duration: 1500, ease: 'outQuad', onUpdate: () => { el.textContent = Math.round(obj.val); } });
+    },
+    repeat: false
+  });
+});
+
+// Tags
+const tags = document.querySelectorAll('.tag');
+if (tags.length) {
+  createScrollObserver({
+    targets: '.tags-wrap',
+    onEnter: () => animate(tags, { opacity: [0, 1], translateY: [15, 0], scale: [0.8, 1], duration: 400, delay: stagger(60), ease: 'outBack' }),
+    repeat: false
+  });
+}
+
+// Dividers
+document.querySelectorAll('.divider').forEach(div => {
+  createScrollObserver({
+    targets: div,
+    onEnter: () => animate(div, { opacity: [0, 1], scaleX: [0, 1], duration: 800, ease: 'outExpo' }),
+    repeat: false
+  });
+});
+
+// 3D model section
+createScrollObserver({
+  targets: '#model .model-container',
+  onEnter: () => animate('#model .model-container', { opacity: [0, 1], scale: [0.95, 1], translateY: [30, 0], duration: 800, ease: 'outExpo' }),
+  repeat: false
+});
+
+// Stats row
+const statsRow = document.querySelector('.stats-row');
+if (statsRow) {
+  createScrollObserver({
+    targets: statsRow,
+    onEnter: () => animate('.stat', { opacity: [0, 1], translateY: [20, 0], duration: 600, delay: stagger(100), ease: 'outQuad' }),
+    repeat: false
+  });
+}
+
+// Button hovers
+document.querySelectorAll('.btn').forEach(btn => {
+  btn.addEventListener('mouseenter', () => animate(btn, { scale: 1.05, duration: 300, ease: 'outQuad' }));
+  btn.addEventListener('mouseleave', () => animate(btn, { scale: 1, duration: 300, ease: 'outQuad' }));
+});
+
+// Card hover glow
+document.querySelectorAll('.research-item, .skill-card, .project-card, .contact-card').forEach(card => {
+  card.addEventListener('mousemove', (e) => {
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty('--mouse-x', ((e.clientX - rect.left) / rect.width * 100) + '%');
+    card.style.setProperty('--mouse-y', ((e.clientY - rect.top) / rect.height * 100) + '%');
+  });
+});
+
+// DOI hover
+document.querySelectorAll('.pub-doi').forEach(doi => {
+  doi.addEventListener('mouseenter', () => animate(doi, { translateX: [0, 4], duration: 200, ease: 'outQuad' }));
+  doi.addEventListener('mouseleave', () => animate(doi, { translateX: [4, 0], duration: 200, ease: 'outQuad' }));
+});
+
+// Active nav link
+const sections = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--fg)' : '';
+  });
+});
+</script>
+</body>
+</html>
